@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import ProductList from "./components/ProductList";
-import Categories from "./components/Categories";
+import ProductList from "./containers/ProductList";
+import Categories from "./containers/Categories";
 import Box from "@mui/material/Box";
-import Header from "./components/Header";
+import Header from "./containers/Header";
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
-import Search from "./components/Search";
-import Sort from "./components/Sort"
+import Search from "./containers/Search";
+import Sort from "./containers/Sort"
 import { useAppDispatch } from './store/hooks'
-import { fetchProducts } from "./features/product/productSlice";
-import Basket from "./components/Basket";
+import { fetchProducts } from "./services/product";
+import Basket from "./containers/Basket";
 
 function App() {
   const dispatch = useAppDispatch()
@@ -20,11 +20,11 @@ function App() {
 
   return (
     <>
-      <Basket/>
+      <Basket />
       <Header />
       <Box sx={{ mt: 1, width: '100%', }} >
         <Grid container spacing={1}>
-          <Grid item xs={2} sx={{ display: {xs: 'none', md: 'block' } }}>
+          <Grid item xs={2} sx={{ display: { xs: 'none', md: 'block' } }}>
             <Categories />
           </Grid>
           <Grid item xs={10} >

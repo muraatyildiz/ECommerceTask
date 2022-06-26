@@ -9,7 +9,6 @@ import { Product } from "../types";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppDispatch } from '../store/hooks'
 import { addProduct } from "../features/shoppingBasket/shoppingBasketSlice";
-import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
@@ -42,51 +41,52 @@ const ProductCard: FunctionComponent<IProductProps> = (props) => {
 
   return (
     <>
-   
-    <Card sx={{ maxWidth: 345, }}>
-      <CardActionArea sx={{ p: '2px 4px', }}>
-        <CardMedia sx={{ width: 'auto', height: 170, margin: "auto" }}
-          component="img"
-          image={product.image}
-          alt={product.title}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical',
-            minHeight:64,
 
-          }}>
-            {product.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
-            WebkitLineClamp: '3',
-            WebkitBoxOrient: 'vertical',
-            minHeight:60
-          }}>
-            {product.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button onClick={() => dispatch(addProduct(product)) && handleClick() } size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />}  sx={{ width:"100%"}}>
-           Sepete Ekle
-        </Button>
-      </CardActions>
-    </Card>
+      <Card sx={{ maxWidth: 345, }}>
+        <CardActionArea sx={{ p: '2px 4px', }}>
+          <CardMedia sx={{ width: 'auto', height: 170, margin: "auto" }}
+            component="img"
+            image={product.image}
+            alt={product.title}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h6" component="div" sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: '2',
+              WebkitBoxOrient: 'vertical',
+              minHeight: 64,
 
-        <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+            }}>
+              {product.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: '3',
+              WebkitBoxOrient: 'vertical',
+              minHeight: 60
+            }}>
+              {product.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button onClick={() => dispatch(addProduct(product)) && handleClick()}
+            size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />} sx={{ width: "100%" }}>
+            Sepete Ekle
+          </Button>
+        </CardActions>
+      </Card>
+
+      <Snackbar open={openAlert} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
           Ürün sepete eklendi
         </Alert>
       </Snackbar>
- 
+
     </>
   );
 }

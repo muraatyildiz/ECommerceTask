@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store/store';
 import { Product} from "../../types";
+import { fetchProducts , fetchCategories ,fetchProductsByCategory} from "../../services/product"
 
 enum SortType {
   ASC = "ascAsPrice",
@@ -34,25 +34,12 @@ const initialState: ProductState = {
   sort: "",
 }
 
-export const fetchProducts = createAsyncThunk("fetchProducts", async () => {
-  const response = await axios.get<Product[]>("https://fakestoreapi.com/products")
-  return response.data
-})
-export const fetchCategories = createAsyncThunk("fetchCategories", async () => {
-  const response = await axios.get<string[]>("https://fakestoreapi.com/products/categories")
-  return response.data
-})
-export const fetchProductsByCategory = createAsyncThunk("fetchProductsByCategory", async (category: string) => {
-  const response = await axios.get<Product[]>("https://fakestoreapi.com/products/category/" + category)
-  return response.data
-})
-
 export const productSlice = createSlice({
   name: ' product',
   initialState,
   reducers: {
     filterProductBySearch: (state, action: PayloadAction<string>) => {
-      if (action.payload == '' || action.payload == null) {
+      if (action.payload ===  '' || action.payload ===  null) {
         state.productList = state.allProduct;
       } else {
         state.productList = state.allProduct;
@@ -61,10 +48,10 @@ export const productSlice = createSlice({
       }
     },
     showSelectedProduct: (state, action: PayloadAction<string>) => {
-      if (action.payload == '' || action.payload == null) {
+      if (action.payload ===  '' || action.payload ===  null) {
         state.productList.push.apply(state.productList, state.allProduct);
       } else {
-        state.productList = state.productList.filter(item => item.title == action.payload)
+        state.productList = state.productList.filter(item => item.title ===  action.payload)
       }
     },
     addSelectedCategory: (state, action: PayloadAction<string>) => {
@@ -76,7 +63,7 @@ export const productSlice = createSlice({
     },
     removeProductsUnSelectedCategory: (state, action: PayloadAction<string>) => {
       state.productList = state.productList.filter(item => item.category !== action.payload)
-      if (state.selectedCategories.length == 0) {
+      if (state.selectedCategories.length ===  0) {
         state.productList = state.allProduct;
       }
     },
@@ -92,25 +79,49 @@ export const productSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state, action) => {
+      state.loading = true;
+      state.error = ""
+    });
     builder.addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Product[]>) => {
       state.productList = action.payload;
       state.allProduct = action.payload;
       state.loading = false;
     });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.loading = false;
+      state.error = "Ürünleri getirirken bir hata oluştu"
+    });
 
+    builder.addCase(fetchCategories.pending, (state, action) => {
+      state.loading = true;
+      state.error = ""
+    });
     builder.addCase(fetchCategories.fulfilled, (state, action: PayloadAction<string[]>) => {
       state.categories = action.payload;
       state.loading = false;
     });
+    builder.addCase(fetchCategories.rejected, (state, action) => {
+      state.loading = false;
+      state.error = "Kategorileri getirirken bir hata oluştu"
+    });
 
+    builder.addCase(fetchProductsByCategory.pending, (state, action) => {
+      state.loading = true;
+      state.error = ""
+    });
     builder.addCase(fetchProductsByCategory.fulfilled, (state, action: PayloadAction<Product[]>) => {
-      if (state.selectedCategories.length == 1) {
+      if (state.selectedCategories.length === 1) {
         state.productList = action.payload;
       } else {
         state.productList.push.apply(state.productList, action.payload);
         state.productList = state.productList.sort((a, b) => Number(a.id) - Number(b.id));
       }
       state.loading = false;
+    });
+    builder.addCase(fetchProductsByCategory.rejected, (state, action) => {
+      state.loading = false;
+      state.error = "Ürünleri getirirken bir hata oluştu"
     });
 
   },

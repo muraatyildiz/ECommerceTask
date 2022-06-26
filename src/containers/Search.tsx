@@ -1,7 +1,6 @@
-import  React , {useRef} from 'react';
+import  {useRef} from 'react';
 import TextField from '@mui/material/TextField';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
-import { Product } from "../types";
+import Autocomplete from '@mui/material/Autocomplete';
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 import { filterProductBySearch, showSelectedProduct} from "../features/product/productSlice";
 
@@ -21,14 +20,14 @@ export default function Search() {
 
 
   return (
-    <Autocomplete  sx={{ p: '2px 4px', display:{sm:'flex' , xs:'none'} ,  width: 400 }}
+    <Autocomplete  sx={{ maxHeigth:60, p: '2px 4px', display:{sm:'flex' , xs:'none'} ,  width: 400 }}
     freeSolo
     id="free-solo-2-demo"
     disableClearable
     onChange={handleChangeAutocomplete}
     options={searchList.map((option) => option.title)}
     renderInput={(params) => (
-      <TextField
+      <TextField sx={{ Heigth:60}}
         {...params}
         placeholder="Ürün ara..."
         onChange={handleChangeTextField}

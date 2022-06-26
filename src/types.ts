@@ -8,7 +8,7 @@ export interface Product {
     image: string;
 }
 
-export interface CartProduct{
+export interface BasketProduct{
      product:Product;
      count:number;
      cost:number;

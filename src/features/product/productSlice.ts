@@ -3,7 +3,11 @@ import axios from 'axios';
 import type { RootState } from '../../store/store';
 import { Product} from "../../types";
 
-// Define a type for the slice state
+enum SortType {
+  ASC = "ascAsPrice",
+  DESC = "descAsPrice",
+}
+
 interface ProductState {
   allProduct: Product[],
   productList: Product[],
@@ -17,7 +21,6 @@ interface ProductState {
   sort: string,
 }
 
-// Define the initial state using that type
 const initialState: ProductState = {
   allProduct: [],
   productList: [],
@@ -78,9 +81,9 @@ export const productSlice = createSlice({
       }
     },
     sortProductList: (state, action: PayloadAction<string>) => {
-      if(action.payload == "ascAsPrice"){
+      if(action.payload === SortType.ASC){
         state.productList = state.productList.sort((a, b) => Number(a.price) - Number(b.price));
-      }else if (action.payload == "descAsPrice") {
+      }else if (action.payload === SortType.DESC) {
         state.productList = state.productList.sort((b, a) => Number(a.price) - Number(b.price));
       } else {
         state.productList = state.productList.sort((a, b) => Number(a.id) - Number(b.id));

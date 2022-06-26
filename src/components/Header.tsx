@@ -6,13 +6,13 @@ import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {useAppSelector,useAppDispatch} from '../store/hooks';
-import { showCartDialog } from "../features/shoppingCart/shoppingCartSlice";
+import { showCartDialog } from "../features/shoppingBasket/shoppingBasketSlice";
 
 export default function PrimarySearchAppBar() {
 
   const dispatch = useAppDispatch()
  
-  const products = useAppSelector((state) => state.shoppingCart.productsInCart)
+  const products = useAppSelector((state) => state.shoppingBasket.productsInBasket)
 
     return (
         
@@ -22,12 +22,12 @@ export default function PrimarySearchAppBar() {
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ display: { xs: 'none', sm: 'block' } }}
+                sx={{ display: {  sm: 'block' } }}
               >
                Shoping Center
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <Box sx={{ display: {  md: 'flex' } }}>
                 <IconButton
                   size="large"
                   aria-label="show 17 new notifications"

@@ -21,7 +21,7 @@ export default function Search() {
 
 
   return (
-    <Autocomplete  sx={{ p: '2px 4px', display: 'flex',  width: 400 }}
+    <Autocomplete  sx={{ p: '2px 4px', display:{sm:'flex' , xs:'none'} ,  width: 400 }}
     freeSolo
     id="free-solo-2-demo"
     disableClearable

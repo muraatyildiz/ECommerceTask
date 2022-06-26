@@ -8,7 +8,7 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import { Product } from "../types";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppDispatch } from '../store/hooks'
-import { addProduct } from "../features/shoppingCart/shoppingCartSlice";
+import { addProduct } from "../features/shoppingBasket/shoppingBasketSlice";
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';

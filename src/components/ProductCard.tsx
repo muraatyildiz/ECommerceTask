@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { FunctionComponent } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,16 +9,40 @@ import { Product } from "../types";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAppDispatch } from '../store/hooks'
 import { addProduct } from "../features/shoppingCart/shoppingCartSlice";
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 interface IProductProps {
   product: Product;
 }
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const ProductCard: FunctionComponent<IProductProps> = (props) => {
   const dispatch = useAppDispatch();
   const { product } = props;
+  const [openAlert, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
+    <>
+   
     <Card sx={{ maxWidth: 345, }}>
       <CardActionArea sx={{ p: '2px 4px', }}>
         <CardMedia sx={{ width: 'auto', height: 170, margin: "auto" }}
@@ -50,11 +75,19 @@ const ProductCard: FunctionComponent<IProductProps> = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button onClick={() => dispatch(addProduct(product))} size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />}  sx={{ width:"100%"}}>
+        <Button onClick={() => dispatch(addProduct(product)) && handleClick() } size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />}  sx={{ width:"100%"}}>
            Sepete Ekle
         </Button>
       </CardActions>
     </Card>
+
+        <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Ürün sepete eklendi
+        </Alert>
+      </Snackbar>
+ 
+    </>
   );
 }
 

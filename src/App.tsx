@@ -20,7 +20,7 @@ function App() {
   return  (
     <>
       <Header />
-      <Box sx={{ mt: 2, width: '100%', }} >
+      <Box sx={{ mt: 1, width: '100%', }} >
         <Grid container spacing={1}>
           <Grid item xs={2}>
             <Categories/>

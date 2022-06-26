@@ -4,12 +4,14 @@ import { Product, CartProduct} from "../../types";
 
 interface CounterState {
     productsInCart: CartProduct[],
-    cartProduct : CartProduct
+    cartProduct : CartProduct,
+    showCart : boolean,
 }
 
 const initialState: CounterState = {
     productsInCart: [],
-    cartProduct:{ product: { id: 0, image: "", title: "", price: 0, description: "" }, count:1, cost:0}
+    cartProduct:{ product: { id: 0, image: "", title: "", price: 0, description: "" }, count:1, cost:0},
+    showCart : false,
 }
 
 export const shoppingCartSlice= createSlice({
@@ -29,13 +31,20 @@ export const shoppingCartSlice= createSlice({
          state.productsInCart.push( state.cartProduct);       
         },
         removeProduct: (state, action: PayloadAction<Product>) => {
-            state.productsInCart = state.productsInCart.filter(item => item.product !== action.payload)
+            state.productsInCart = state.productsInCart.filter(item => item.product.id !== action.payload.id)
+            if(state.productsInCart.length == 0){
+                state.showCart=false;
+            }
         },
+        showCartDialog: (state, action: PayloadAction<boolean>) => {
+            state.showCart = action.payload
+        },
+    
 
     },
 
 })
 
-export const { addProduct, removeProduct } = shoppingCartSlice.actions
+export const { addProduct, removeProduct ,showCartDialog } = shoppingCartSlice.actions
 export const selectCart = (state: RootState) => state.shoppingCart.productsInCart
 export default shoppingCartSlice.reducer

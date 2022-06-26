@@ -5,7 +5,11 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {useAppSelector} from '../store/hooks'
+
 export default function PrimarySearchAppBar() {
+ 
+  const products = useAppSelector((state) => state.shoppingCart.productsInCart)
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -26,7 +30,7 @@ export default function PrimarySearchAppBar() {
                   aria-label="show 17 new notifications"
                   color="inherit"
                 >
-                  <Badge badgeContent={17} color="error">
+                  <Badge badgeContent={products.length} color="error">
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>

@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import counterSlice from '../features/counter/counterSlice'
 import productSlice from '../features/product/productSlice'
 import { setupListeners } from '@reduxjs/toolkit/query'
+import shoppinCartSlice from '../features/shoppingCart/shoppingCartSlice'
 
 export const store = configureStore({
   reducer: {
     counter: counterSlice,
-    product: productSlice,    
+    product: productSlice,   
+    shoppingCart:shoppinCartSlice, 
   },
 })
 

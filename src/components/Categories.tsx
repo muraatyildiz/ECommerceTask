@@ -31,17 +31,13 @@ const Categories = () => {
      }else{
       dispatch(fetchProductsByCategory(value))
       dispatch(addSelectedCategory(value))
-      
-     }
+   }
   
      return
 
   };
   useEffect(() => {
     getCategories();
-   // Check
-   
-
  }, []);
   return (<>
     <Typography sx={{ ml: 1, mt: 2 }} variant="h6" component="div">

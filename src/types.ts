@@ -7,5 +7,9 @@ export interface Product {
     category?: string;
     image: string;
 }
-//todo chhek category
 
+export interface CartProduct{
+     product:Product;
+     count:number;
+     cost:number;
+}

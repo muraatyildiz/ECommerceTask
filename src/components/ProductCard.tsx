@@ -6,14 +6,17 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { Product } from "../types";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
+import { useAppDispatch } from '../store/hooks'
+import { addProduct } from "../features/shoppingCart/shoppingCartSlice";
 
 interface IProductProps {
   product: Product;
 }
 
 const ProductCard: FunctionComponent<IProductProps> = (props) => {
+  const dispatch = useAppDispatch();
   const { product } = props;
+
   return (
     <Card sx={{ maxWidth: 345, }}>
       <CardActionArea sx={{ p: '2px 4px', }}>
@@ -47,7 +50,7 @@ const ProductCard: FunctionComponent<IProductProps> = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />} sx={{ width:"100%"}}>
+        <Button onClick={() => dispatch(addProduct(product))} size="small" color="primary" variant="contained" startIcon={<ShoppingCartIcon />}  sx={{ width:"100%"}}>
            Sepete Ekle
         </Button>
       </CardActions>
